@@ -1,2 +1,0 @@
-Link para importação no Postman
-https://www.getpostman.com/collections/e2fe39d9338601e41e83
