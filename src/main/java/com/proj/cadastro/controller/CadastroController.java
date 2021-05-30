@@ -44,15 +44,17 @@ public class CadastroController {
 
     @PostMapping("/cadastrar")
     @ResponseStatus(HttpStatus.CREATED)
-    public void cadastrar(@RequestBody Pessoa pessoa) throws Exception {
+    public Pessoa cadastrar(@RequestBody Pessoa pessoa) throws Exception {
         cadastroService.cadastrar(pessoa);
+        return pessoa;
     }
 
     @Transactional
     @PutMapping("/atualizar/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void atualizar(@PathVariable("id") long id, @RequestBody Pessoa pessoa) throws Exception {
+    public Pessoa atualizar(@PathVariable("id") long id, @RequestBody Pessoa pessoa) throws Exception {
         cadastroService.atualizarPessoa(id, pessoa);
+        return pessoa;
     }
 
     @DeleteMapping("/deletar/{id}")
