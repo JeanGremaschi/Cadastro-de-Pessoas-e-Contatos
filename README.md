@@ -39,3 +39,6 @@ Crud de cadastro de pessoas e seus contatos
             "email": "email@dominio.com"
         }]
 }``
+
+Link para importação no Postman
+``https://www.getpostman.com/collections/e2fe39d9338601e41e83``
