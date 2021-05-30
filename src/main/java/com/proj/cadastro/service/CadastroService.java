@@ -6,12 +6,12 @@ import com.proj.cadastro.model.Contato;
 import com.proj.cadastro.model.Pessoa;
 import com.proj.cadastro.repository.ContatoRepository;
 import com.proj.cadastro.repository.PessoaRepository;
+import org.assertj.core.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,6 +27,7 @@ public class CadastroService {
     public Pessoa cadastrar(Pessoa pessoa) throws Exception {
         validaCPF(pessoa.getCpf());
         pessoa.setCpf(formataCPF(pessoa.getCpf()));
+        validaDataNascimento(pessoa.getDataNascimento());
         int value = pessoa.getContatos().size();
         for (int i = 0 ; i < value; i++) {
             Contato novoContato = pessoa.getContatos().get(i);
@@ -49,15 +50,16 @@ public class CadastroService {
         Pessoa dados = pessoaRepository.getById(id);
         validaCPF(pessoa.getCpf());
         validaDataNascimento(pessoa.getDataNascimento());
-        pessoa.setCpf(formataCPF(pessoa.getCpf()));
         dados.setNome(pessoa.getNome());
-        dados.setCpf(pessoa.getCpf());
+        dados.setCpf(formataCPF(pessoa.getCpf()));
         dados.setDataNascimento(pessoa.getDataNascimento());
         dados.setContatos(pessoa.getContatos());
         pessoaRepository.save(dados);
     }
 
-    private void validaDataNascimento(Date dataNascimento) {
+    private void validaDataNascimento(Date dataNascimento) throws Exception {
+        if (dataNascimento.after(DateUtil.now()))
+            throw new Exception("Data de nascimento inválida!");
     }
 
     public Pessoa getPessoaById(Long id) {
